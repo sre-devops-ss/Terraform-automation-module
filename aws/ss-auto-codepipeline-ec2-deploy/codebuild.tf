@@ -6,9 +6,6 @@ data "aws_ssm_parameter" "buildspec"{
 }
 
 resource "random_id" "decimal" {
-  keepers = {
-    first = "${timestamp()}"
-  }
   byte_length = 8
 }
 
