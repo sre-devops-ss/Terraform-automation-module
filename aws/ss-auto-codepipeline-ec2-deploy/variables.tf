@@ -1,4 +1,7 @@
-
+variable "source_type" {
+  type    = string
+  default = "CODEPIPELINE"
+}
 # Source Stage Variables
 variable "source_name" {
   type    = string
@@ -83,10 +86,7 @@ variable "deploy_category" {
 
 #codebuild
 #---------
-variable "source_type" {
-  type    = string
-  default = "CODEPIPELINE"
-}
+
 
 variable "env_compute_type" {
   type    = string
@@ -121,7 +121,8 @@ variable "retention" {
 
 variable "codebuild-role-name" {
   type = string
-  default = "common-codebuild-role"}
+  default = "common-codebuild-role"
+}
 # ----------------------
 
 
