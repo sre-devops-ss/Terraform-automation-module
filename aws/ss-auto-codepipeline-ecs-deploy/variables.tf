@@ -134,11 +134,15 @@ default = "common-codedeploy-role"}
 
 
 
-variable "role_name" {type = string
-default = "common-codepipeline-role"}
+variable "role_name" {
+  type = string
+  default = "common-codepipeline-role"
+}
 
-variable "cross-role_arn" {type = string
-default = ""}
+variable "cross-role_arn" {
+  type = string
+   default = ""
+}
 
 variable "buildspec-parameter" {
   type = string
