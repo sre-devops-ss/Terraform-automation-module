@@ -8,7 +8,7 @@ terraform {
 }
 
 data "aws_iam_role" "codebuild"{
-  name = "common-codebuild-role"
+  name = var.codebuild-role-name
 }
 data "aws_ssm_parameter" "buildspec"{
   name=var.buildspec-parameter
@@ -39,7 +39,7 @@ resource "aws_cloudwatch_log_stream" "build" {
 resource "aws_codebuild_project" "resource" {
 
   name         = "${var.project}-build-${var.project_environment}"
-  service_role = var.codebuild-role-arn !=""?var.codebuild-role-arn:data.aws_iam_role.codebuild.arn
+  service_role = data.aws_iam_role.codebuild.arn
 
   artifacts {
     type = var.source_type

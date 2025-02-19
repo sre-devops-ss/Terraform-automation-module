@@ -2,10 +2,6 @@ variable "project" {type =string}
 variable "modifiedby" {type = string}
 variable "project_environment" {type=string}
 
-variable "buildspec" {
-  type    = string
-  default = "buildspec.yml"
-}
 
 variable "source_type" {
   type    = string
@@ -41,10 +37,10 @@ variable "env_vars" {
 variable "retention" { type = number
 default = 3}
 
-variable "codebuild-role-arn" {
-  type = string
-  default = ""
-}
 variable "buildspec-parameter" {
   default = "/common/codebuild/base"
+}
+variable "codebuild-role-name" {
+  type = string
+  default = "common-codebuild-role"
 }
