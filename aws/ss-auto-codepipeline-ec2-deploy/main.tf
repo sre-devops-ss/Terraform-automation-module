@@ -1,5 +1,5 @@
 resource "aws_codepipeline" "resource" {
-  name     = "$${var.project}-${var.project_environment}-pipeline"
+  name     = "${var.project}-${var.project_environment}-pipeline"
   role_arn = data.aws_iam_role.codepipeline.arn
   artifact_store {
     location = var.artifact-bucket
