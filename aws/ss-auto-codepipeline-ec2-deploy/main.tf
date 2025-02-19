@@ -1,40 +1,62 @@
-module "codebuild" {
-  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-codebuild?ref=main"
-
-}
-
-
 resource "aws_codepipeline" "resource" {
   name     = "$${var.project}-${var.project_environment}-pipeline"
-  role_arn = data.aws_iam_role.details.arn
+  role_arn = data.aws_iam_role.codepipeline.arn
   artifact_store {
-    location = var.pipeline.artifact.bucket
-    type     = var.pipeline.artifact.type
+    location = var.artifact-bucket
+    type     = var.artifact-type
     encryption_key {
-      id   =var.pipeline.artifact.encrypt.id
-      type = var.pipeline.artifact.encrypt.type
+      id   =var.encrypt-id
+      type = var.encrypt_type
     }
   }
 
-  dynamic "stage" {
-    for_each =var.pipeline.stage
-    content {
-      name =stage.value.name
-      action {
-        category = stage.value.category
-        name     = stage.value.name
-        owner    = stage.value.owner
-        provider = stage.value.provider
-        version  = stage.value.version
-        output_artifacts =stage.value.output_artifacts
-        input_artifacts = stage.value.input_artifacts
-        role_arn = stage.value.cross_acc_arn
-        configuration = stage.value.configuration
+  stage {
+    name = var.source_name
+    action {
+      category = var.source_category
+      name     = var.source_name
+      owner    = var.source_owner
+      provider = var.source_provider
+      version  = var.source_version
+      role_arn =var.cross-role_arn!=""?var.cross-role_arn:data.aws_iam_role.codepipeline.arn
+      input_artifacts = []
+      output_artifacts = ["source_output"]
+      configuration = {
+        RepositoryName = var.source_repository_name
+        BranchName     = var.source_branch_name
+        OutputArtifactFormat: "CODE_ZIP"
       }
-
+    }
+  }
+  stage {
+    name = var.build_name
+    action {
+      category = var.build_category
+      name     = var.build_name
+      owner    = var.build_owner
+      provider = var.build_provider
+      version  = var.build_version
+      input_artifacts = ["source_output"]
+      output_artifacts = ["build_output"]
+      configuration = {
+       ProjectName=aws_codebuild_project.resource.name
+      }
     }
   }
 
-
-
+  stage {
+    name = var.deploy_name
+    action {
+      category = var.deploy_category
+      name     = var.deploy_name
+      owner    = var.deploy_owner
+      provider = var.deploy_provider
+      version  = var.deploy_version
+      input_artifacts = ["build_output"]
+      configuration = {
+        ApplicationName     = aws_codedeploy_app.resource.name
+        DeploymentGroupName = aws_codedeploy_deployment_group.resource.deployment_group_name
+      }
+    }
+  }
 }

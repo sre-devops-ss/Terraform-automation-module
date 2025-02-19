@@ -1,6 +1,8 @@
 variable "project" {type =string}
 variable "modifiedby" {type = string}
 variable "project_environment" {type=string}
+variable "log_group" {type = string}
+variable "log_stream" {type = string}
 
 variable "buildspec" {
   type    = string
@@ -40,11 +42,3 @@ variable "env_vars" {
 }
 variable "retention" { type = number
 default = 3}
-
-variable "codebuild-role-arn" {
-  type = string
-  default = ""
-}
-variable "buildspec-parameter" {
-  default = "/common/codebuild/base"
-}
