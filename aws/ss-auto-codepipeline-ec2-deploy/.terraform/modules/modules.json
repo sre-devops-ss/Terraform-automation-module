@@ -1,0 +1,1 @@
+{"Modules":[{"Key":"","Source":"","Dir":"."},{"Key":"codebuild","Source":"git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-ec2?ref=main","Dir":".terraform/modules/codebuild/aws/ss-auto-ec2"}]}
