@@ -114,7 +114,8 @@ variable "env_vars" {
       value="true"
     }]
 }
-variable "retention" { type = number
+variable "retention" {
+  type = number
   default = 3}
 
 variable "codebuild-role-name" {type = string
