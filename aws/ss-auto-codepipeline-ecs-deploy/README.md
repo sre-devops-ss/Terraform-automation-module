@@ -74,9 +74,9 @@ module "pipeline" {
   project               = "my-project"
   project_environment   = "dev"
   ec2_tag_name          = "my-ec2-tag"
-  modifiedby            = "admin"
-  encrypt-id            = "kms-key-id"
-  artifact-bucket       = "my-artifact-bucket"
+  modifiedby            = var.modifiedby
+  encrypt-id            = var.encrypt-id
+  artifact-bucket       = "${var.artifact-bucket}-${var.environment}"
   source_repository_name = "my-repo"
   source_branch_name     = "main"
   ecs-cluster-name      = "my-ecs-cluster"
