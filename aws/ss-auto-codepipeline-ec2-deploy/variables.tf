@@ -1,7 +1,3 @@
-#
-# variable "role_arn" {
-#   type    = string
-# }
 
 # Source Stage Variables
 variable "source_name" {
