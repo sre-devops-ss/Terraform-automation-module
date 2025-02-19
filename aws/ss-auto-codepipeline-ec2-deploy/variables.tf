@@ -116,27 +116,37 @@ variable "env_vars" {
 }
 variable "retention" {
   type = number
-  default = 3}
+  default = 3
+}
 
-variable "codebuild-role-name" {type = string
-default = "common-codebuild-role"}
+variable "codebuild-role-name" {
+  type = string
+  default = "common-codebuild-role"}
 # ----------------------
 
 
 #CodeDeploy
 #-----------
-variable "platform" {type = string
-  default = "Server"}
-variable "codedeploy-role-name" {type = string
-default = "common-codedeploy-role"}
+variable "platform" {
+  type = string
+  default = "Server"
+}
+variable "codedeploy-role-name" {
+  type = string
+  default = "common-codedeploy-role"
+}
 
 
 
-variable "role_name" {type = string
-default = "common-codepipeline-role"}
+variable "role_name" {
+  type = string
+  default = "common-codepipeline-role"
+}
 
-variable "cross-role_arn" {type = string
-default = ""}
+variable "cross-role_arn" {
+  type = string
+  default = ""
+}
 
 variable "buildspec-parameter" {
   type = string
