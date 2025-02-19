@@ -10,7 +10,7 @@ Terraform module which creates an EC2 instance on AWS.
 
 ```hcl
 module "ec2_instance" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
+  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-ec2?ref=main"
 
   name = "single-instance"
 
@@ -31,7 +31,7 @@ module "ec2_instance" {
 
 ```hcl
 module "ec2_instance" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
+  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-ec2?ref=main"
 
   for_each = toset(["one", "two", "three"])
 
@@ -54,7 +54,7 @@ module "ec2_instance" {
 
 ```hcl
 module "ec2_instance" {
-  source  = "terraform-aws-modules/ec2-instance/aws"
+  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-ec2?ref=main"
 
   name = "spot-instance"
 

@@ -1,0 +1,74 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "VisualEditor0",
+      "Effect": "Allow",
+      "Action": [
+        "logs:ListTagsLogGroup",
+        "logs:DescribeLogStreams",
+        "s3:ListBucket",
+        "ecr:ListImages",
+        "logs:ListLogDeliveries",
+        "ecs:DescribeTaskDefinition",
+        "logs:CreateExportTask",
+        "ecs:UpdateService",
+        "logs:CreateLogStream",
+        "ecs:RegisterTaskDefinition",
+        "ecr:DescribeRepositories",
+        "ecs:DescribeServices",
+        "logs:DescribeDestinations",
+        "ecr:BatchCheckLayerAvailability",
+        "ecs:ListClusters",
+        "logs:DescribeLogGroups",
+        "ecr:GetDownloadUrlForLayer",
+        "logs:DescribeAccountPolicies",
+        "ecr:GetAuthorizationToken",
+        "logs:CreateLogGroup",
+        "logs:PutLogEvents",
+        "logs:ListTagsForResource",
+        "s3:GetObject",
+        "ecr:DescribeImages",
+        "ecr:GetRepositoryPolicy"
+      ],
+      "Resource": "*"
+    },
+
+    {
+      "Effect": "Allow",
+      "Action": "elasticloadbalancing:*",
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ec2:*",
+        "cognito-idp:DescribeUserPoolClient"
+      ],
+      "Resource": "*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": "iam:CreateServiceLinkedRole",
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "iam:AWSServiceName": "elasticloadbalancing.amazonaws.com"
+        }
+      }
+    },
+    {
+      "Effect": "Allow",
+      "Action": "arc-zonal-shift:*",
+      "Resource": "arn:aws:elasticloadbalancing:*:*:loadbalancer/*"
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "arc-zonal-shift:ListManagedResources",
+        "arc-zonal-shift:ListZonalShifts"
+      ],
+      "Resource": "*"
+    }
+  ]
+}
