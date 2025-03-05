@@ -1,0 +1,10 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+terraform.tfstate
+terraform.tfstate.backup
+.terraform
+.terraform.lock.hcl
+.idea
+.idea/*
+/.idea
