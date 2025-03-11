@@ -21,6 +21,7 @@ resource "aws_lb" "this" {
       prefix  = try(access_logs.value.prefix, null)
     }
   }
+  tags_all = var.tags
 
   dynamic "connection_logs" {
     for_each = length(var.connection_logs) > 0 ? [var.connection_logs] : []

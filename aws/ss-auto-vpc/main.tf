@@ -48,6 +48,7 @@ resource "aws_vpc" "this" {
     var.tags,
     var.vpc_tags,
   )
+  tags_all =var.tags
 }
 
 resource "aws_vpc_ipv4_cidr_block_association" "this" {
