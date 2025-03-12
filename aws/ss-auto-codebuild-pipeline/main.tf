@@ -34,7 +34,7 @@ resource "aws_codepipeline" "resource" {
       output_artifacts = ["source_output"]
       configuration = {
         RepositoryName = var.source_repository_name
-        BranchName     = var.source_branch_name
+        BranchName     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
         OutputArtifactFormat: "CODE_ZIP"
       }
     }

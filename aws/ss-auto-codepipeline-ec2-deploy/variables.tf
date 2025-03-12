@@ -172,6 +172,7 @@ variable "source_repository_name" {
 }
 variable "source_branch_name" {
   type    = string
+  default = ""
 }
 
 #pipeline
