@@ -160,9 +160,12 @@ variable "project" {type = string}
 
 variable "encrypt-id" {
   type = string
+  default = "/common/pipeline/kms-encrypt-id"
 }
 variable "artifact-bucket" {
   type = string
+  default = "/common/pipeline/artifcats"
+
 }
 variable "source_repository_name" {
   type    = string

@@ -1,15 +1,22 @@
 data "aws_iam_role" "codepipeline" {
   name = var.role_name
 }
+data "aws_ssm_parameter" "kms-enc-id"{
+  name=var.encrypt-id
+}
+data "aws_ssm_parameter" "pipeline-artifacts"{
+  name=var.artifact-bucket
+}
+
 resource "aws_codepipeline" "resource" {
   depends_on = [data.aws_iam_role.codepipeline]
   name     = "${var.project}-${var.project_environment}-pipeline"
   role_arn = data.aws_iam_role.codepipeline.arn
   artifact_store {
-    location = var.artifact-bucket
+    location = data.aws_ssm_parameter.pipeline-artifacts.value
     type     = var.artifact-type
     encryption_key {
-      id   =var.encrypt-id
+      id   =data.aws_ssm_parameter.kms-enc-id.value
       type = var.encrypt_type
     }
   }
