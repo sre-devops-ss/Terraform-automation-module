@@ -37,9 +37,7 @@ variable "env_vars" {
 variable "retention" { type = number
 default = 3}
 
-variable "buildspec-parameter" {
-  default = "/common/codebuild/base"
-}
+
 variable "codebuild-role-name" {
   type = string
   default = "common-codebuild-role"

@@ -149,9 +149,9 @@ variable "cross-role_arn" {
   default = ""
 }
 
-variable "buildspec-parameter" {
+variable "buildspec-value" {
   type = string
-  default = "/common/codebuild/base"
+  default = ""
 }
 variable "ec2_tag_name" {type = string} #Deployment
 variable "modifiedby" {type = string}

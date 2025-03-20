@@ -144,9 +144,9 @@ variable "cross-role_arn" {
    default = ""
 }
 
-variable "buildspec-parameter" {
+variable "buildspec-value" {
   type = string
-  default = "/common/codebuild/dockerspec"
+  default = ""
 }
 
 variable "ec2_tag_name" {type = string} #Deployment
