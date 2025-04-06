@@ -28,7 +28,7 @@ resource "aws_codepipeline" "resource" {
       owner    = var.source_owner
       provider = var.source_provider
       version  = var.source_version
-      role_arn =var.cross-role_arn!=""?var.cross-role_arn:data.aws_iam_role.codepipeline.arn
+      role_arn =var.codecommit-role_arn!=""?var.codecommit-role_arn:data.aws_iam_role.codepipeline.arn
       input_artifacts = []
       output_artifacts = ["source_output"]
       configuration = {

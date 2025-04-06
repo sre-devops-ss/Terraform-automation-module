@@ -144,7 +144,7 @@ variable "role_name" {
   default = "common-codepipeline-role"
 }
 
-variable "cross-role_arn" {
+variable "codecommit-role_arn" {
   type = string
   default = ""
 }
