@@ -14,7 +14,7 @@ When you're using ALB Listener rules, make sure that every rule's `actions` bloc
 
 ```hcl
 module "alb" {
-  source = "terraform-aws-modules/alb/aws"
+  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-lb?ref=main"
 
   name    = "my-alb"
   vpc_id  = "vpc-abcde012"
@@ -90,7 +90,7 @@ module "alb" {
 
 ```hcl
 module "alb" {
-  source = "terraform-aws-modules/alb/aws"
+  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-lb?ref=main"
 
   # Truncated for brevity ...
 
@@ -160,7 +160,7 @@ module "alb" {
 
 ```hcl
 module "alb" {
-  source = "terraform-aws-modules/alb/aws"
+  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-lb?ref=main"
 
   # Truncated for brevity ...
 
@@ -236,7 +236,7 @@ module "alb" {
 
 ```hcl
 module "nlb" {
-  source = "terraform-aws-modules/alb/aws"
+  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-lb?ref=main"
 
   name               = "my-nlb"
   load_balancer_type = "network"

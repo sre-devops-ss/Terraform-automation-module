@@ -10,7 +10,7 @@ See [`examples`](https://github.com/terraform-aws-modules/terraform-aws-ecr/tree
 
 ```hcl
 module "ecr" {
-  source = "terraform-aws-modules/ecr/aws"
+  source = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-ecr?ref=main"
 
   repository_name = "private-example"
 
