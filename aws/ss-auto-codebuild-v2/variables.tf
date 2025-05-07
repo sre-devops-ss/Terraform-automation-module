@@ -8,6 +8,7 @@ variable "source_type" {
   default = "CODEPIPELINE"
 }
 
+
 variable "env_compute_type" {
   type    = string
   default = "BUILD_GENERAL1_SMALL"
@@ -41,4 +42,7 @@ default = 3}
 variable "codebuild-role-name" {
   type = string
   default = "common-codebuild-role"
+}
+variable "buildspec-value" {
+  type = string
 }

@@ -15,7 +15,6 @@ data "aws_ssm_parameter" "buildspec"{
 }
 
 resource "aws_cloudwatch_log_group" "build" {
-  depends_on = [random_id.decimal]
   name = "codebuild/${var.project}-${var.project_environment}"
   retention_in_days = var.retention
   tags = {
