@@ -4,3 +4,6 @@ output "name" {
 output "codebuild-name" {
   value = aws_codebuild_project.resource.name
 }
+output "arn" {
+  value = aws_codepipeline.resource.arn
+}

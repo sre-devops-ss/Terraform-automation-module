@@ -10,3 +10,6 @@ output "codedeploy-app-name" {
 output "codedeploy-group" {
   value = aws_codedeploy_deployment_group.resource.deployment_group_name
 }
+output "arn" {
+  value = aws_codepipeline.resource.arn
+}
