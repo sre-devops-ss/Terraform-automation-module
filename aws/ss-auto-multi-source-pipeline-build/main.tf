@@ -13,12 +13,12 @@ variable "GitHubPersonalAccessToken" {
   default = ""
 }
 
-variable "SourceProvider" {
+variable "GitProvider" {
   type        = string
   description = "Choose the source provider for the pipeline"
   default     = "CodeCommit"
   validation {
-    condition     = contains(["GitHub", "CodeCommit"], var.SourceProvider)
+    condition     = contains(["GitHub", "CodeCommit"], var.GitProvider)
     error_message = "SourceProvider must be GitHub or CodeCommit."
   }
 }
@@ -53,7 +53,7 @@ resource "aws_codepipeline" "resource" {
       role_arn =var.codecommit-role_arn!=""?var.codecommit-role_arn:data.aws_iam_role.codepipeline.arn
       input_artifacts = []
       output_artifacts = ["source_output"]
-      configuration =var.SourceProvider == "GitHub" ? {
+      configuration =var.GitProvider == "GitHub" ? {
         Owner      = split("/", var.source_repository_name)[0]
         Repo       = split("/", var.source_repository_name)[1]
         Branch     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
