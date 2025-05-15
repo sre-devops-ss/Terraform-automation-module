@@ -159,6 +159,7 @@ variable "buildspec-value" {
 
 variable "ec2_tag_name" { 
   type = string
+  default = ""
 } #Deployment
 variable "modifiedby" {
   type = string

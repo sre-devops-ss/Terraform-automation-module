@@ -153,10 +153,19 @@ variable "buildspec-value" {
   type = string
   default = ""
 }
-variable "ec2_tag_name" {type = string} #Deployment
-variable "modifiedby" {type = string}
-variable "project_environment" {type=string}
-variable "project" {type = string}
+variable "ec2_tag_name" {
+  type = string
+  default = ""
+} #Deployment
+variable "modifiedby" {
+  type = string
+}
+variable "project_environment" {
+  type=string
+}
+variable "project" {
+  type = string
+}
 
 variable "encrypt-id" {
   type = string

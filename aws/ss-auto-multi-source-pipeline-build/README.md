@@ -68,7 +68,7 @@ To use this module, define the required variables in your Terraform configuratio
 
 ```hcl
 module "pipeline" {
-  source                 = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-codebuild-pipeline?ref=main"
+  source                 = "git::https://github.com/sre-devops-ss/Terraform-automation-module.git//aws/ss-auto-codepipeline-ec2-deploy?ref=main"
   project               = "my-project"
   project_environment   = "dev"
   ec2_tag_name          = "my-ec2-tag"
