@@ -24,7 +24,7 @@ resource "aws_cloudwatch_log_stream" "build" {
 resource "aws_codebuild_project" "resource" {
 
   name         = "${var.project}-build-${var.project_environment}"
-  service_role = data.aws_iam_role.codebuild.arn
+  service_role = data.aws_ssm_parameter.codebuildrole.value
 
   artifacts {
     type = var.source_type

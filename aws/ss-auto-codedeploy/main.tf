@@ -5,7 +5,7 @@ resource "aws_codedeploy_deployment_group" "resource" {
   depends_on = [data.aws_iam_role.codedeploy]
   app_name              = aws_codedeploy_app.resource.name
   deployment_group_name = "${var.project}-build-${var.project_environment}-deploy-group"
-  service_role_arn      = data.aws_iam_role.codedeploy.arn
+  service_role_arn      = data.aws_ssm_parameter.codedeployrole.value
 
   ec2_tag_set {
     ec2_tag_filter {

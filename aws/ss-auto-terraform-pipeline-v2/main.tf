@@ -1,6 +1,12 @@
 data "aws_iam_role" "codepipeline" {
   name = var.role_name
 }
+data "aws_ssm_parameter" "pipelinerole"{
+  name=var.role_name
+}
+data "aws_ssm_parameter" "codebuildrole"{
+  
+}
 data "aws_ssm_parameter" "kms-enc-id"{
   name=var.encrypt-id
 }

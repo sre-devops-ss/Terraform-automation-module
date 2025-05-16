@@ -1,3 +1,38 @@
+data "aws_iam_role" "codepipeline" {
+  name = var.role_name
+}
+data "aws_iam_role" "codebuild"{
+  name = var.codebuild-role-name
+}
+
+variable "role_name-param-store" {
+  type = string
+  default = "/common/codepipeline/role"
+}
+variable "codebuild-role-param-store" {
+  type = string
+  default = "/common/codebuild/role"
+}
+data "aws_ssm_parameter" "pipelinerole"{
+  name=var.role_name-param-store
+}
+data "aws_ssm_parameter" "codebuildrole"{
+  name=var.codebuild-role-param-store
+}
+data "aws_ssm_parameter" "pipeline-artifacts"{
+  name=var.artifact-bucket
+}
+data "aws_ssm_parameter" "kms-enc-id"{
+  name=var.encrypt-id
+}
+
+
+data "aws_ssm_parameter" "buildspec"{
+  name="/common/codebuild/base"
+}
+
+#--------------
+
 variable "source_type" {
   type    = string
   default = "CODEPIPELINE"
@@ -99,17 +134,16 @@ variable "codebuild-role-name" {
   type = string
   default = "common-codebuild-role"
 }
-# ----------------------
-
-
-#CodeDeploy
-#-----------
-
 
 variable "role_name" {
   type = string
   default = "common-codepipeline-role"
 }
+
+
+
+
+
 
 variable "codecommit-role_arn" {
   type = string

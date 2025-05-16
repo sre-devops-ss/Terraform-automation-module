@@ -1,3 +1,18 @@
+variable "role_name-param-store" {
+  type = string
+  default = "/common/codepipeline/role"
+}
+variable "codebuild-role-param-store" {
+  type = string
+  default = "/common/codebuild/role"
+}
+data "aws_ssm_parameter" "pipelinerole"{
+  name=var.role_name-param-store
+}
+data "aws_ssm_parameter" "codebuildrole"{
+  name=var.codebuild-role-param-store
+}
+
 variable "source_type" {
   type    = string
   default = "CODEPIPELINE"
