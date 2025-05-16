@@ -32,7 +32,24 @@ data "aws_ssm_parameter" "buildspec"{
 }
 
 #--------------
+variable "kms_key_enabled" {
+  type = string
+  default = "true"
+}
+variable "GitHubPersonalAccessToken" {
+  type = string
+  default = ""
+}
 
+variable "GitProvider" {
+  type        = string
+  description = "Choose the source provider for the pipeline"
+  default     = "CodeCommit"
+  validation {
+    condition     = contains(["GitHub", "CodeCommit"], var.GitProvider)
+    error_message = "SourceProvider must be GitHub or CodeCommit."
+  }
+}
 variable "source_type" {
   type    = string
   default = "CODEPIPELINE"
