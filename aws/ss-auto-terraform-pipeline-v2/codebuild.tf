@@ -1,9 +1,4 @@
- data "aws_iam_role" "codebuild"{
-  name = var.codebuild-role-name
-}
-data "aws_ssm_parameter" "buildspec"{
-  name="/common/codebuild/base"
-}
+
 resource "aws_cloudwatch_log_group" "build" {
 
   name = "codebuild/${var.project}-${var.project_environment}"
@@ -22,7 +17,7 @@ resource "aws_cloudwatch_log_stream" "build" {
 resource "aws_codebuild_project" "resource" {
 
   name         = "${var.project}-build-${var.project_environment}"
-  service_role = data.aws_iam_role.codebuild.arn
+  service_role = data.aws_ssm_parameter.codebuildrole.value
 
   artifacts {
     type = var.source_type
@@ -30,7 +25,7 @@ resource "aws_codebuild_project" "resource" {
 
   source {
     type =var.source_type
-    buildspec =var.buildspec-value!=""?var.buildspec-value:data.aws_ssm_parameter.buildspec.value
+    buildspec =var.apply-buildspec-value!=""?var.apply-buildspec-value:data.aws_ssm_parameter.apply-buildspec.value
     report_build_status = true
   }
 

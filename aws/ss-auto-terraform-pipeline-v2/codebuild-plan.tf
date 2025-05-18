@@ -1,10 +1,3 @@
-
-data "aws_ssm_parameter" "plan-buildspec"{
-  name=var.plan-buildspec-parameter
-}
-
-
-
 resource "aws_cloudwatch_log_group" "plan-build" {
   name = "codebuild/${var.project}-plan-${var.project_environment}"
   retention_in_days = var.retention
@@ -22,7 +15,7 @@ resource "aws_cloudwatch_log_stream" "plan-build" {
 resource "aws_codebuild_project" "plan-resource" {
 
   name         = "${var.project}-plan-build-${var.project_environment}"
-  service_role = data.aws_iam_role.codebuild.arn
+  service_role = data.aws_ssm_parameter.codebuildrole.value
 
   artifacts {
     type = var.source_type
@@ -30,7 +23,7 @@ resource "aws_codebuild_project" "plan-resource" {
 
   source {
     type =var.source_type
-    buildspec =data.aws_ssm_parameter.plan-buildspec.value
+    buildspec =var.plan-buildspec-value!=""?var.plan-buildspec-value:data.aws_ssm_parameter.plan-buildspec.value
     report_build_status = true
   }
 
@@ -59,7 +52,4 @@ resource "aws_codebuild_project" "plan-resource" {
   tags = {
     Name="${var.project}-plan-build"
     last_tf_change=var.modifiedby
-    env="codebuild/${var.project}-plan-${var.project_environment}"
-  }
-
-}
+    env="codebuild/${var.project}-plan-${var.project_environme

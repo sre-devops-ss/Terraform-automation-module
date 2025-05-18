@@ -1,6 +1,3 @@
-data "aws_iam_role" "codedeploy"{
-  name = var.codedeploy-role-name
-}
 resource "aws_codedeploy_deployment_group" "resource" {
   app_name              = aws_codedeploy_app.resource.name
   deployment_group_name = "${var.project}-build-${var.project_environment}-deploy-group"

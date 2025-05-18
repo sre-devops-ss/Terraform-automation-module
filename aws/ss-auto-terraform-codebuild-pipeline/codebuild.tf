@@ -1,12 +1,3 @@
-data "aws_iam_role" "codebuild"{
-  name = var.codebuild-role-name
-}
-data "aws_ssm_parameter" "buildspec"{
-  name=var.buildspec-parameter
-}
-
-
-
 resource "aws_cloudwatch_log_group" "build" {
   name = "codebuild/${var.project}-${var.project_environment}"
   retention_in_days = var.retention
@@ -32,7 +23,7 @@ resource "aws_codebuild_project" "resource" {
 
   source {
     type =var.source_type
-    buildspec =data.aws_ssm_parameter.buildspec.value
+    buildspec =var.apply-buildspec-value!=""?var.apply-buildspec-value:data.aws_ssm_parameter.apply-buildspec.value
     report_build_status = true
   }
 

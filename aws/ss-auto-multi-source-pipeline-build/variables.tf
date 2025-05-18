@@ -1,17 +1,49 @@
+data "aws_ssm_parameter" "buildspec"{
+  name="${var.project_environment}/codebuild/base"
+}
+
 variable "role_name-param-store" {
   type = string
-  default = "/common/codepipeline/role"
-}
-variable "codebuild-role-param-store" {
-  type = string
-  default = "/common/codebuild/role"
+  default = "codepipeline/role"
 }
 data "aws_ssm_parameter" "pipelinerole"{
-  name=var.role_name-param-store
+  name="${var.project_environment}/${var.role_name-param-store}"
+}
+
+
+variable "codebuild-role-param-store" {
+  type = string
+  default = "codebuild/role"
 }
 data "aws_ssm_parameter" "codebuildrole"{
-  name=var.codebuild-role-param-store
+  name="${var.project_environment}/${var.codebuild-role-param-store}"
 }
+
+
+variable "codedeploy-role-param-store" {
+  type = string
+  default = "codedeploy/role"
+}
+data "aws_ssm_parameter" "codedeployrole"{
+  name="${var.project_environment}/${var.codedeploy-role-param-store}"
+}
+
+
+variable "encrypt-id" {
+  type = string
+  default = "pipeline/kms-encrypt-id"
+}
+data "aws_ssm_parameter" "kms-enc-id"{
+  name="${var.project_environment}/${var.encrypt-id}"
+}
+variable "artifact-bucket" {
+  type = string
+  default = "pipeline/artifcats"
+}
+data "aws_ssm_parameter" "pipeline-artifacts"{
+  name="${var.project_environment}/${var.artifact-bucket}"
+}
+
 
 variable "source_type" {
   type    = string
@@ -147,17 +179,6 @@ variable "platform" {
   type = string
   default = "Server"
 }
-variable "codedeploy-role-name" {
-  type = string
-  default = "common-codedeploy-role"
-}
-
-
-
-variable "role_name" {
-  type = string
-  default = "common-codepipeline-role"
-}
 
 variable "codecommit-role_arn" {
   type = string
@@ -181,16 +202,6 @@ variable "project_environment" {
 variable "project" {
   type = string
 }
-
-variable "encrypt-id" {
-  type = string
-  default = "/common/pipeline/kms-encrypt-id"
-}
-variable "artifact-bucket" {
-  type = string
-  default = "/common/pipeline/artifcats"
-
-}
 variable "source_repository_name" {
   type    = string
 }
@@ -208,4 +219,14 @@ variable "encrypt_type" {
 variable "artifact-type" {
   type = string
   default = "S3"
+}
+
+
+variable "ecs-cluster-name" {
+  type = string
+  default = ""
+}
+variable "ecs-service-name" {
+  type = string
+  default = ""
 }

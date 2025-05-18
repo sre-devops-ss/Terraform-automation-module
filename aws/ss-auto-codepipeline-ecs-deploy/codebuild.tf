@@ -1,11 +1,3 @@
-data "aws_iam_role" "codebuild"{
-  name = var.codebuild-role-name
-}
-data "aws_ssm_parameter" "buildspec"{
-  name="/common/codebuild/base"
-}
-
-
 resource "aws_cloudwatch_log_group" "build" {
   name = "codebuild/${var.project}-${var.project_environment}"
   retention_in_days = var.retention

@@ -1,9 +1,3 @@
-data "aws_iam_role" "codepipeline" {
-  name = var.role_name
-}
-data "aws_ssm_parameter" "kms-enc-id"{
-  name=var.encrypt-id
-}
 variable "kms_key_enabled" {
   type = string
   default = "true"
@@ -27,7 +21,6 @@ data "aws_ssm_parameter" "pipeline-artifacts"{
   name=var.artifact-bucket
 }
 resource "aws_codepipeline" "resource" {
-  depends_on = [data.aws_iam_role.codepipeline]
   name     = "${var.project}-${var.project_environment}-pipeline"
   role_arn = data.aws_ssm_parameter.pipelinerole.value
   artifact_store {

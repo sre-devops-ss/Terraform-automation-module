@@ -1,10 +1,4 @@
 
-data "aws_ssm_parameter" "plan-buildspec"{
-  name=var.plan-buildspec-parameter
-}
-
-
-
 resource "aws_cloudwatch_log_group" "plan-build" {
   name = "codebuild/${var.project}-plan-${var.project_environment}"
   retention_in_days = var.retention
@@ -30,7 +24,7 @@ resource "aws_codebuild_project" "plan-resource" {
 
   source {
     type =var.source_type
-    buildspec =data.aws_ssm_parameter.plan-buildspec.value
+    buildspec =var.plan-buildspec-value!=""?var.plan-buildspec-value:data.aws_ssm_parameter.plan-buildspec.value
     report_build_status = true
   }
 

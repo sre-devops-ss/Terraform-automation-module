@@ -1,17 +1,63 @@
+variable "apply-buildspec-value" {
+  type = string
+  default = ""
+}
+data "aws_ssm_parameter" "apply-buildspec"{
+  name="${var.project_environment}/terraform/apply/codebuild/base"
+}
+
+
+variable "plan-buildspec-value" {
+  type = string
+  default = ""
+}
+data "aws_ssm_parameter" "plan-buildspec"{
+  name="${var.project_environment}/terraform/plan/codebuild/base"
+}
+
+
 variable "role_name-param-store" {
   type = string
-  default = "/common/codepipeline/role"
-}
-variable "codebuild-role-param-store" {
-  type = string
-  default = "/common/codebuild/role"
+  default = "codepipeline/role"
 }
 data "aws_ssm_parameter" "pipelinerole"{
-  name=var.role_name-param-store
+  name="${var.project_environment}/${var.role_name-param-store}"
+}
+
+
+variable "codebuild-role-param-store" {
+  type = string
+  default = "codebuild/role"
 }
 data "aws_ssm_parameter" "codebuildrole"{
-  name=var.codebuild-role-param-store
+  name="${var.project_environment}/${var.codebuild-role-param-store}"
 }
+
+
+variable "codedeploy-role-param-store" {
+  type = string
+  default = "codedeploy/role"
+}
+data "aws_ssm_parameter" "codedeployrole"{
+  name="${var.project_environment}/${var.codedeploy-role-param-store}"
+}
+
+
+variable "encrypt-id" {
+  type = string
+  default = "pipeline/kms-encrypt-id"
+}
+data "aws_ssm_parameter" "kms-enc-id"{
+  name="${var.project_environment}/${var.encrypt-id}"
+}
+variable "artifact-bucket" {
+  type = string
+  default = "pipeline/artifcats"
+}
+data "aws_ssm_parameter" "pipeline-artifacts"{
+  name="${var.project_environment}/${var.artifact-bucket}"
+}
+
 
 variable "source_type" {
   type    = string
@@ -147,47 +193,23 @@ variable "platform" {
   type = string
   default = "Server"
 }
-variable "codedeploy-role-name" {
-  type = string
-  default = "common-codedeploy-role"
-}
-
-
-
-variable "role_name" {
-  type = string
-  default = "common-codepipeline-role"
-}
 
 variable "codecommit-role_arn" {
   type = string
   default = ""
 }
-
-variable "buildspec-parameter" {
+variable "ec2_tag_name" {
   type = string
-  default = "/common/codebuild/base"
+  default = ""
+} #Deployment
+variable "modifiedby" {
+  type = string
 }
-
-
-variable "plan-buildspec-parameter" {
-  type = string
-  default = "/common/codebuild/base"
+variable "project_environment" {
+  type=string
 }
-
-variable "ec2_tag_name" {type = string} #Deployment
-variable "modifiedby" {type = string}
-variable "project_environment" {type=string}
-variable "project" {type = string}
-
-variable "encrypt-id" {
+variable "project" {
   type = string
-  default = "/common/pipeline/kms-encrypt-id"
-}
-variable "artifact-bucket" {
-  type = string
-  default = "/common/pipeline/artifcats"
-
 }
 variable "source_repository_name" {
   type    = string
@@ -206,4 +228,14 @@ variable "encrypt_type" {
 variable "artifact-type" {
   type = string
   default = "S3"
+}
+
+
+variable "ecs-cluster-name" {
+  type = string
+  default = ""
+}
+variable "ecs-service-name" {
+  type = string
+  default = ""
 }

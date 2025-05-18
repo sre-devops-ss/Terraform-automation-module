@@ -1,37 +1,38 @@
-data "aws_iam_role" "codepipeline" {
-  name = var.role_name
+variable "apply-buildspec-value" {
+  type = string
+  default = ""
 }
-data "aws_iam_role" "codebuild"{
-  name = var.codebuild-role-name
+data "aws_ssm_parameter" "apply-buildspec"{
+  name="${var.project_environment}/terraform/apply/codebuild/base"
 }
+
+
+variable "plan-buildspec-value" {
+  type = string
+  default = ""
+}
+data "aws_ssm_parameter" "plan-buildspec"{
+  name="${var.project_environment}/terraform/plan/codebuild/base"
+}
+
 
 variable "role_name-param-store" {
   type = string
-  default = "/common/codepipeline/role"
-}
-variable "codebuild-role-param-store" {
-  type = string
-  default = "/common/codebuild/role"
+  default = "codepipeline/role"
 }
 data "aws_ssm_parameter" "pipelinerole"{
-  name=var.role_name-param-store
+  name="${var.project_environment}/${var.role_name-param-store}"
+}
+
+
+variable "codebuild-role-param-store" {
+  type = string
+  default = "codebuild/role"
 }
 data "aws_ssm_parameter" "codebuildrole"{
-  name=var.codebuild-role-param-store
-}
-data "aws_ssm_parameter" "pipeline-artifacts"{
-  name=var.artifact-bucket
-}
-data "aws_ssm_parameter" "kms-enc-id"{
-  name=var.encrypt-id
+  name="${var.project_environment}/${var.codebuild-role-param-store}"
 }
 
-
-data "aws_ssm_parameter" "buildspec"{
-  name="/common/codebuild/base"
-}
-
-#--------------
 variable "kms_key_enabled" {
   type = string
   default = "true"
@@ -50,6 +51,33 @@ variable "GitProvider" {
     error_message = "SourceProvider must be GitHub or CodeCommit."
   }
 }
+
+
+variable "codedeploy-role-param-store" {
+  type = string
+  default = "codedeploy/role"
+}
+data "aws_ssm_parameter" "codedeployrole"{
+  name="${var.project_environment}/${var.codedeploy-role-param-store}"
+}
+
+
+variable "encrypt-id" {
+  type = string
+  default = "pipeline/kms-encrypt-id"
+}
+data "aws_ssm_parameter" "kms-enc-id"{
+  name="${var.project_environment}/${var.encrypt-id}"
+}
+variable "artifact-bucket" {
+  type = string
+  default = "pipeline/artifcats"
+}
+data "aws_ssm_parameter" "pipeline-artifacts"{
+  name="${var.project_environment}/${var.artifact-bucket}"
+}
+
+
 variable "source_type" {
   type    = string
   default = "CODEPIPELINE"
@@ -85,7 +113,7 @@ variable "source_version" {
 # Build Stage Variables
 variable "build_name" {
   type    = string
-  default = "Apply"
+  default = "Build"
 }
 
 variable "build_category" {
@@ -107,6 +135,30 @@ variable "build_version" {
   type    = string
   default = "1"
 }
+
+variable "deploy_version" {
+  type    = string
+  default = "1"
+}
+
+variable "deploy_owner" {
+  type    = string
+  default = "AWS"
+}
+
+variable "deploy_provider" {
+  type    = string
+  default = "CodeDeploy"
+}
+variable "deploy_name" {
+  type    = string
+  default = "Deploy"
+}
+variable "deploy_category" {
+  type    = string
+  default = "Deploy"
+}
+
 
 
 
@@ -151,26 +203,24 @@ variable "codebuild-role-name" {
   type = string
   default = "common-codebuild-role"
 }
+# ----------------------
 
-variable "role_name" {
+
+#CodeDeploy
+#-----------
+variable "platform" {
   type = string
-  default = "common-codepipeline-role"
+  default = "Server"
 }
-
-
-
-
-
 
 variable "codecommit-role_arn" {
   type = string
   default = ""
 }
-
-variable "buildspec-value" {
+variable "ec2_tag_name" {
   type = string
   default = ""
-}
+} #Deployment
 variable "modifiedby" {
   type = string
 }
@@ -179,16 +229,6 @@ variable "project_environment" {
 }
 variable "project" {
   type = string
-}
-
-variable "encrypt-id" {
-  type = string
-  default = "/common/pipeline/kms-encrypt-id"
-}
-variable "artifact-bucket" {
-  type = string
-  default = "/common/pipeline/artifcats"
-
 }
 variable "source_repository_name" {
   type    = string
@@ -208,7 +248,13 @@ variable "artifact-type" {
   type = string
   default = "S3"
 }
-variable "plan-buildspec-parameter" {
+
+
+variable "ecs-cluster-name" {
   type = string
-  default = "/common/codebuild/base"
+  default = ""
+}
+variable "ecs-service-name" {
+  type = string
+  default = ""
 }
