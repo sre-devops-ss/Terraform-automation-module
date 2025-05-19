@@ -3,7 +3,7 @@ variable "buildspec-value" {
   default = ""
 }
 data "aws_ssm_parameter" "buildspec"{
-  name="/${var.project_environment}/codebuild/base"
+  name="/common/codebuild/base"
 }
 
 variable "apply-buildspec-value" {
@@ -11,7 +11,7 @@ variable "apply-buildspec-value" {
   default = ""
 }
 data "aws_ssm_parameter" "apply-buildspec"{
-  name="/${var.project_environment}/terraform/apply/codebuild/base"
+  name="/terraform/apply/codebuild/base"
 }
 
 
@@ -20,7 +20,7 @@ variable "plan-buildspec-value" {
   default = ""
 }
 data "aws_ssm_parameter" "plan-buildspec"{
-  name="/${var.project_environment}/terraform/plan/codebuild/base"
+  name="/terraform/plan/codebuild/base"
 }
 
 
@@ -72,17 +72,17 @@ data "aws_ssm_parameter" "codedeployrole"{
 
 variable "encrypt-id" {
   type = string
-  default = "pipeline/kms-encrypt-id"
+  default = "/common/pipeline/kms-encrypt-id"
 }
 data "aws_ssm_parameter" "kms-enc-id"{
-  name="/${var.project_environment}/${var.encrypt-id}"
+  name=var.encrypt-id
 }
 variable "artifact-bucket" {
   type = string
-  default = "pipeline/artifcats"
+  default = "common/pipeline/artifcats"
 }
 data "aws_ssm_parameter" "pipeline-artifacts"{
-  name="/${var.project_environment}/${var.artifact-bucket}"
+  name=var.artifact-bucket
 }
 
 
@@ -207,10 +207,7 @@ variable "retention" {
   default = 3
 }
 
-variable "codebuild-role-name" {
-  type = string
-  default = "common-codebuild-role"
-}
+
 # ----------------------
 
 
