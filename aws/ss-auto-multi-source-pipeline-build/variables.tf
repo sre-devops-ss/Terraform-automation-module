@@ -26,19 +26,19 @@ data "aws_ssm_parameter" "plan-buildspec"{
 
 variable "role_name-param-store" {
   type = string
-  default = "codepipeline/role"
+  default = "/common/codepipeline/role"
 }
 data "aws_ssm_parameter" "pipelinerole"{
-  name="/${var.project_environment}/${var.role_name-param-store}"
+  name=var.role_name-param-store
 }
 
 
 variable "codebuild-role-param-store" {
   type = string
-  default = "codebuild/role"
+  default = "/common/codebuild/role"
 }
 data "aws_ssm_parameter" "codebuildrole"{
-  name="/${var.project_environment}/${var.codebuild-role-param-store}"
+  name=var.codebuild-role-param-store
 }
 
 variable "kms_key_enabled" {
@@ -63,10 +63,10 @@ variable "GitProvider" {
 
 variable "codedeploy-role-param-store" {
   type = string
-  default = "codedeploy/role"
+  default = "/common/codedeploy/role"
 }
 data "aws_ssm_parameter" "codedeployrole"{
-  name="/${var.project_environment}/${var.codedeploy-role-param-store}"
+  name=var.codedeploy-role-param-store
 }
 
 
@@ -79,7 +79,7 @@ data "aws_ssm_parameter" "kms-enc-id"{
 }
 variable "artifact-bucket" {
   type = string
-  default = "common/pipeline/artifcats"
+  default = "/common/pipeline/artifcats"
 }
 data "aws_ssm_parameter" "pipeline-artifacts"{
   name=var.artifact-bucket
