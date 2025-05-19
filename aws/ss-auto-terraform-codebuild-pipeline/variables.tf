@@ -1,3 +1,11 @@
+variable "buildspec-value" {
+  type = string
+  default = ""
+}
+data "aws_ssm_parameter" "buildspec"{
+  name="${var.project_environment}/codebuild/base"
+}
+
 variable "apply-buildspec-value" {
   type = string
   default = ""
@@ -31,6 +39,25 @@ variable "codebuild-role-param-store" {
 }
 data "aws_ssm_parameter" "codebuildrole"{
   name="${var.project_environment}/${var.codebuild-role-param-store}"
+}
+
+variable "kms_key_enabled" {
+  type = string
+  default = "true"
+}
+variable "GitHubPersonalAccessToken" {
+  type = string
+  default = ""
+}
+
+variable "GitProvider" {
+  type        = string
+  description = "Choose the source provider for the pipeline"
+  default     = "CodeCommit"
+  validation {
+    condition     = contains(["GitHub", "CodeCommit"], var.GitProvider)
+    error_message = "SourceProvider must be GitHub or CodeCommit."
+  }
 }
 
 

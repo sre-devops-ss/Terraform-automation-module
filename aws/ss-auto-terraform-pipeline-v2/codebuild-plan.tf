@@ -50,6 +50,9 @@ resource "aws_codebuild_project" "plan-resource" {
   }
 
   tags = {
-    Name="${var.project}-plan-build"
+    Name="${var.project}-plan"
     last_tf_change=var.modifiedby
-    env="codebuild/${var.project}-plan-${var.project_environme
+    env=var.project_environment
+  }
+
+}

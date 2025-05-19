@@ -1,6 +1,28 @@
+variable "buildspec-value" {
+  type = string
+  default = ""
+}
 data "aws_ssm_parameter" "buildspec"{
   name="${var.project_environment}/codebuild/base"
 }
+
+variable "apply-buildspec-value" {
+  type = string
+  default = ""
+}
+data "aws_ssm_parameter" "apply-buildspec"{
+  name="${var.project_environment}/terraform/apply/codebuild/base"
+}
+
+
+variable "plan-buildspec-value" {
+  type = string
+  default = ""
+}
+data "aws_ssm_parameter" "plan-buildspec"{
+  name="${var.project_environment}/terraform/plan/codebuild/base"
+}
+
 
 variable "role_name-param-store" {
   type = string
@@ -17,6 +39,25 @@ variable "codebuild-role-param-store" {
 }
 data "aws_ssm_parameter" "codebuildrole"{
   name="${var.project_environment}/${var.codebuild-role-param-store}"
+}
+
+variable "kms_key_enabled" {
+  type = string
+  default = "true"
+}
+variable "GitHubPersonalAccessToken" {
+  type = string
+  default = ""
+}
+
+variable "GitProvider" {
+  type        = string
+  description = "Choose the source provider for the pipeline"
+  default     = "CodeCommit"
+  validation {
+    condition     = contains(["GitHub", "CodeCommit"], var.GitProvider)
+    error_message = "SourceProvider must be GitHub or CodeCommit."
+  }
 }
 
 
@@ -181,11 +222,6 @@ variable "platform" {
 }
 
 variable "codecommit-role_arn" {
-  type = string
-  default = ""
-}
-
-variable "buildspec-value" {
   type = string
   default = ""
 }

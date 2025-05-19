@@ -1,3 +1,11 @@
+variable "buildspec-value" {
+  type = string
+  default = ""
+}
+data "aws_ssm_parameter" "buildspec"{
+  name="${var.project_environment}/codebuild/base"
+}
+
 variable "apply-buildspec-value" {
   type = string
   default = ""

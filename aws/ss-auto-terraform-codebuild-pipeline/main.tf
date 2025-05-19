@@ -1,6 +1,3 @@
-data "aws_ssm_parameter" "pipeline-artifacts"{
-  name=var.artifact-bucket
-}
 
 resource "aws_codepipeline" "resource" {
   name     = "${var.project}-${var.project_environment}-pipeline"
