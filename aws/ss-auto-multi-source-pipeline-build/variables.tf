@@ -3,7 +3,7 @@ variable "buildspec-value" {
   default = ""
 }
 data "aws_ssm_parameter" "buildspec"{
-  name="${var.project_environment}/codebuild/base"
+  name="/${var.project_environment}/codebuild/base"
 }
 
 variable "apply-buildspec-value" {
@@ -11,7 +11,7 @@ variable "apply-buildspec-value" {
   default = ""
 }
 data "aws_ssm_parameter" "apply-buildspec"{
-  name="${var.project_environment}/terraform/apply/codebuild/base"
+  name="/${var.project_environment}/terraform/apply/codebuild/base"
 }
 
 
@@ -20,7 +20,7 @@ variable "plan-buildspec-value" {
   default = ""
 }
 data "aws_ssm_parameter" "plan-buildspec"{
-  name="${var.project_environment}/terraform/plan/codebuild/base"
+  name="/${var.project_environment}/terraform/plan/codebuild/base"
 }
 
 
@@ -29,7 +29,7 @@ variable "role_name-param-store" {
   default = "codepipeline/role"
 }
 data "aws_ssm_parameter" "pipelinerole"{
-  name="${var.project_environment}/${var.role_name-param-store}"
+  name="/${var.project_environment}/${var.role_name-param-store}"
 }
 
 
@@ -38,7 +38,7 @@ variable "codebuild-role-param-store" {
   default = "codebuild/role"
 }
 data "aws_ssm_parameter" "codebuildrole"{
-  name="${var.project_environment}/${var.codebuild-role-param-store}"
+  name="/${var.project_environment}/${var.codebuild-role-param-store}"
 }
 
 variable "kms_key_enabled" {
@@ -66,7 +66,7 @@ variable "codedeploy-role-param-store" {
   default = "codedeploy/role"
 }
 data "aws_ssm_parameter" "codedeployrole"{
-  name="${var.project_environment}/${var.codedeploy-role-param-store}"
+  name="/${var.project_environment}/${var.codedeploy-role-param-store}"
 }
 
 
@@ -75,14 +75,14 @@ variable "encrypt-id" {
   default = "pipeline/kms-encrypt-id"
 }
 data "aws_ssm_parameter" "kms-enc-id"{
-  name="${var.project_environment}/${var.encrypt-id}"
+  name="/${var.project_environment}/${var.encrypt-id}"
 }
 variable "artifact-bucket" {
   type = string
   default = "pipeline/artifcats"
 }
 data "aws_ssm_parameter" "pipeline-artifacts"{
-  name="${var.project_environment}/${var.artifact-bucket}"
+  name="/${var.project_environment}/${var.artifact-bucket}"
 }
 
 
