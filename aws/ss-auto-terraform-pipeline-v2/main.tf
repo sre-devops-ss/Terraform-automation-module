@@ -72,7 +72,7 @@ resource "aws_codepipeline" "resource" {
   }
 
   stage {
-    name = var.build_name
+    name = "Terraform-Apply"
     action {
       category = var.build_category
       name     = var.build_name
