@@ -1,3 +1,7 @@
+resource "aws_codestarconnections_connection" "codestar_connection_git" {
+  name          = "${var.project}-${var.project_environment}-codestar"
+  provider_type = var.GitProvider
+}
 resource "aws_codepipeline" "resource" {
   name     = "${var.project}-${var.project_environment}-pipeline"
   role_arn = data.aws_ssm_parameter.pipelinerole.value
@@ -25,10 +29,17 @@ resource "aws_codepipeline" "resource" {
       input_artifacts = []
       output_artifacts = ["source_output"]
       configuration =var.GitProvider == "GitHub" ? {
-        Owner      = split("/", var.source_repository_name)[0]
-        Repo       = split("/", var.source_repository_name)[1]
-        Branch     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
-        OAuthToken = var.GitHubPersonalAccessToken
+        #v1-----
+        # Owner      = split("/", var.source_repository_name)[0]
+        # Repo       = split("/", var.source_repository_name)[1]
+        # Branch     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
+        # OAuthToken = var.GitHubPersonalAccessToken
+
+        #v2
+        #------
+        ConnectionArn=aws_codestarconnections_connection.codestar_connection_git.arn
+        FullRepositoryId=var.source_repository_name
+        BranchName=var.source_branch_name!=""?var.source_branch_name:var.project_environment
       } : {
         RepositoryName = var.source_repository_name
         BranchName     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
