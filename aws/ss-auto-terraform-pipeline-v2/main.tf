@@ -1,5 +1,6 @@
 
 resource "aws_codestarconnections_connection" "codestar_connection_git" {
+  count= var.source_provider=="CodeStarSourceConnection"?1:0
   name          = "${var.project}-${var.project_environment}-codestar"
   provider_type = var.GitProvider
 }
@@ -38,7 +39,7 @@ resource "aws_codepipeline" "resource" {
         
         #v2
         #------
-        ConnectionArn=aws_codestarconnections_connection.codestar_connection_git.arn
+        ConnectionArn=aws_codestarconnections_connection.codestar_connection_git[0].arn
         FullRepositoryId=var.source_repository_name
         BranchName=var.source_branch_name!=""?var.source_branch_name:var.project_environment
       } : {
