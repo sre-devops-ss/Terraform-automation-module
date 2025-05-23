@@ -5,9 +5,12 @@ resource "aws_codepipeline" "resource" {
   artifact_store {
     location = data.aws_ssm_parameter.pipeline-artifacts.value
     type     = var.artifact-type
-    encryption_key {
-      id   =data.aws_ssm_parameter.kms-enc-id.value
-      type = var.encrypt_type
+    dynamic "encryption_key" {
+      for_each = var.kms_key_enabled ? [1] : []
+      content {
+        id   = data.aws_ssm_parameter.kms-enc-id.value
+        type = var.encrypt_type
+      }
     }
   }
 

@@ -50,12 +50,7 @@ variable "GitHubPersonalAccessToken" {
   default = ""
 }
 
-variable "GitProvider" {
-  type        = string
-  description = "Choose the source provider for the pipeline"
-  default     = "CodeCommit"
 
-}
 
 
 variable "codedeploy-role-param-store" {
