@@ -1,8 +1,8 @@
 
 resource "aws_codestarconnections_connection" "codestar_connection_git" {
-  count= var.source_provider=="CodeStarSourceConnection"?1:0
+  count= var.source_provider=="CodeStarSourceConnection"? 1:0
   name          = "${var.project}-${var.project_environment}-codestar"
-  provider_type = var.GitProvider
+  provider_type = var.source_provider
 }
 resource "aws_codepipeline" "resource" {
   name     = "${var.project}-${var.project_environment}-pipeline"
@@ -30,7 +30,7 @@ resource "aws_codepipeline" "resource" {
       role_arn =var.codecommit-role_arn!=""?var.codecommit-role_arn:data.aws_ssm_parameter.pipelinerole.value
       input_artifacts = []
       output_artifacts = ["source_output"]
-      configuration =var.GitProvider == "GitHub" ? {
+      configuration =var.source_provider != "CodeCommit" ? {
         #v1-----
         # Owner      = split("/", var.source_repository_name)[0]
         # Repo       = split("/", var.source_repository_name)[1]
