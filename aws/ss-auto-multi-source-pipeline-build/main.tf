@@ -18,37 +18,64 @@ resource "aws_codepipeline" "resource" {
     }
   }
 
-  stage {
-    name = var.source_name
-    action {
-      category = var.source_category
-      name     = var.source_name
-      owner    = var.source_owner
-      provider = var.source_provider
-      version  = var.source_version
-      role_arn =var.codecommit-role_arn!=""?var.codecommit-role_arn:data.aws_ssm_parameter.pipelinerole.value
-      input_artifacts = []
-      output_artifacts = ["source_output"]
-      configuration =var.source_provider != "CodeCommit" ? {
-        #v1-----
-        # Owner      = split("/", var.source_repository_name)[0]
-        # Repo       = split("/", var.source_repository_name)[1]
-        # Branch     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
-        # OAuthToken = var.GitHubPersonalAccessToken
+  # stage {
+  #   name = var.source_name
+  #   action {
+  #     category = var.source_category
+  #     name     = var.source_name
+  #     owner    = var.source_owner
+  #     provider = var.source_provider
+  #     version  = var.source_version
+  #     role_arn =var.codecommit-role_arn!=""?var.codecommit-role_arn:data.aws_ssm_parameter.pipelinerole.value
+  #     input_artifacts = []
+  #     output_artifacts = ["source_output"]
+  #     configuration =var.source_provider != "CodeCommit" ? {
+  #       #v1-----
+  #       # Owner      = split("/", var.source_repository_name)[0]
+  #       # Repo       = split("/", var.source_repository_name)[1]
+  #       # Branch     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
+  #       # OAuthToken = var.GitHubPersonalAccessToken
+  # 
+  #       #v2
+  #       #------
+  #       ConnectionArn=aws_codestarconnections_connection.codestar_connection_git[0].arn
+  #       FullRepositoryId=var.source_repository_name
+  #       BranchName=var.source_branch_name!=""?var.source_branch_name:var.project_environment
+  #     } : {
+  #       RepositoryName = var.source_repository_name
+  #       BranchName     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
+  #       OutputArtifactFormat: "CODE_ZIP"
+  #     }
+  #   }
+  # }
 
-        #v2
-        #------
-        ConnectionArn=aws_codestarconnections_connection.codestar_connection_git[0].arn
-        FullRepositoryId=var.source_repository_name
-        BranchName=var.source_branch_name!=""?var.source_branch_name:var.project_environment
-      } : {
-        RepositoryName = var.source_repository_name
-        BranchName     = var.source_branch_name!=""?var.source_branch_name:var.project_environment
-        OutputArtifactFormat: "CODE_ZIP"
+  dynamic "stage" {
+    for_each = var.source_provider != "" ? [1] : []
+    content {
+      name = var.source_name
+      action {
+        category = var.source_category
+        name     = var.source_name
+        owner    = var.source_owner
+        provider = var.source_provider
+        version  = var.source_version
+        role_arn = var.codecommit-role_arn != "" ? var.codecommit-role_arn : data.aws_ssm_parameter.pipelinerole.value
+        input_artifacts  = []
+        output_artifacts = ["source_output"]
+        configuration = var.source_provider != "CodeCommit" ? {
+          ConnectionArn    = aws_codestarconnections_connection.codestar_connection_git[0].arn
+          FullRepositoryId = var.source_repository_name
+          BranchName       = var.source_branch_name != "" ? var.source_branch_name : var.project_environment
+        } : {
+          RepositoryName         = var.source_repository_name
+          BranchName             = var.source_branch_name != "" ? var.source_branch_name : var.project_environment
+          OutputArtifactFormat   = "CODE_ZIP"
+        }
       }
     }
   }
-  
+
+
   stage {
     name = var.build_name
     action {
