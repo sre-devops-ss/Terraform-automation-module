@@ -1,3 +1,7 @@
+variable "gitProviderType" {
+  type = string
+  default = "GitHub"
+}
 variable "buildspec-value" {
   type = string
   default = ""
@@ -49,14 +53,6 @@ variable "GitHubPersonalAccessToken" {
   type = string
   default = ""
 }
-
-variable "GitProvider" {
-  type        = string
-  description = "Choose the source provider for the pipeline"
-  default     = "CodeCommit"
-}
-
-
 variable "codedeploy-role-param-store" {
   type = string
   default = "/common/codedeploy/role"

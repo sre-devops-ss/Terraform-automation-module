@@ -1,3 +1,7 @@
+variable "gitProviderType" {
+  type = string
+  default = "GitHub"
+}
 variable "buildspec-value" {
   type = string
   default = ""

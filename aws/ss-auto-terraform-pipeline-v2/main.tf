@@ -1,8 +1,9 @@
 
+
 resource "aws_codestarconnections_connection" "codestar_connection_git" {
   count= var.source_provider=="CodeStarSourceConnection"? 1:0
   name          = "${var.project}-${var.project_environment}-codestar"
-  provider_type = var.source_provider
+  provider_type = var.gitProviderType
 }
 resource "aws_codepipeline" "resource" {
   name     = "${var.project}-${var.project_environment}-pipeline"

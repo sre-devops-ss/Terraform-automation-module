@@ -1,3 +1,7 @@
+variable "gitProviderType" {
+  type = string
+  default = "GitHub"
+}
 variable "buildspec-value" {
   type = string
   default = ""
@@ -49,7 +53,6 @@ variable "GitHubPersonalAccessToken" {
   type = string
   default = ""
 }
-
 variable "codedeploy-role-param-store" {
   type = string
   default = "/common/codedeploy/role"
